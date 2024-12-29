@@ -7,7 +7,7 @@
 # 1. 导入reequests库、os
 import requests
 import os
-import tqdm
+from tqdm import tqdm
 
 # 2. 设置api.github的代理，（如果没有7890端口，记得删除第20行的proxies参数）
 proxies = {
