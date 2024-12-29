@@ -9,7 +9,7 @@ import requests
 import os
 from tqdm import tqdm
 
-# 2. 设置api.github的代理，（如果没有7890端口，记得删除第20行的proxies参数）
+# 2. 设置api.github的代理
 proxies = {
     'http': 'http://127.0.0.1:7890',
     'https': 'http://127.0.0.1:7890'
@@ -18,7 +18,8 @@ proxies = {
 # 3. 获取批量下载链接的函数
 def get_dlist(gurl: str) -> list:
     dlist = []
-    res = requests.get(url=gurl, proxies=proxies,verify=False)
+    # res = requests.get(url=gurl, proxies=proxies,verify=False)
+    res = requests.get(url=gurl, verify=False)
 
     if res.status_code == 200:
         # print(res.status_code)
