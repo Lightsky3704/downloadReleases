@@ -7,6 +7,7 @@
 # 1. 导入reequests库、os
 import requests
 import os
+import tqdm
 
 # 2. 设置api.github的代理，（如果没有7890端口，记得删除第20行的proxies参数）
 proxies = {
@@ -37,9 +38,14 @@ def download_release(durl: str):
 
     try:
         response = requests.get(durl, stream=True)
+        total_size = int(response.headers.get('Content-Length', 0)) 
+        
         if response.status_code == 200:
             with open(save_path, "wb") as file:
-                for chunk in response.iter_content(chunk_size=1024):
+                for chunk in tqdm(response.iter_content(chunk_size=1024),
+                                  total=total_size // 1024,
+                                  unit='KB',
+                                  desc=file_name):
                     if chunk:
                         file.write(chunk)
         else:
